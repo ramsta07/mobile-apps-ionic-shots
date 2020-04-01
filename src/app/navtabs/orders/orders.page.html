@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Table Orders</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    
+    <!-- Segments Button -->
+
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2">
+        <ion-segment value="dining" (ionChange)="onFilterUpdate($event)">
+          <ion-segment-button value="dining">
+            <ion-label>Dining</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="bar">
+            <ion-label>Bar</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+    </ion-row> 
+
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2">
+        <ion-list *ngFor="let group of loadedTables">
+
+          <!-- Create the List Divider of the Tables -->
+
+          <ion-item-divider color="light">{{ group.key }}</ion-item-divider>
+
+          <!-- Create each tables into a card component -->
+          <div class="wrapper">
+            <div *ngFor="let table of group.values">
+                <ion-card [routerLink]=
+                            "['/',
+                            'navtabs',
+                            'tabs',
+                            'orders',
+                            table.id]">
+                  <ion-card-header>
+                    <div class="subtitle-wrapper">
+                      <!-- <ion-icon class="ion-float-right" name="ellipsis-vertical-outline" (click)="onTableOptions()"></ion-icon> -->
+                      <ion-card-subtitle> {{ table.tableStatus }}
+                      </ion-card-subtitle>
+                    </div>
+                    <ion-card-title class="ion-text-center"> {{ table.tableName }}</ion-card-title>
+                  </ion-card-header>
+                  <ion-card-content class="ion-text-center">
+                   <ion-img src="{{ table.tableImageURL }}"></ion-img>
+                   <span class="card-timer"><ion-icon slot="start" name="time-outline"></ion-icon>12 min</span>
+                  </ion-card-content>
+                </ion-card>
+            </div>
+          </div>
+
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

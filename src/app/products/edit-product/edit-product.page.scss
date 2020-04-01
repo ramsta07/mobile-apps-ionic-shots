@@ -1,0 +1,39 @@
+.loader-wrapper  {
+    margin: auto;
+}
+
+.image-wrapper {
+    border: 1px solid black;
+    border-radius: 5px;
+    align-items: center;
+    margin-top: 20px;
+}
+
+ion-row {
+    ion-card {
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+}
+
+.footer-btn {
+    text-transform: uppercase;
+}
+
+.alert-radio-group button:nth-child(1) .alert-radio-label:before {
+    content: url(../../../assets/images/pricetag-outline.svg);
+}
+
+.alert-radio-group button:nth-child(2) .alert-radio-label:before {
+    content: url(../../../assets/images/table_11.png);
+}
+
+p {
+    font-size: 0.8em;
+    color: var(--ion-color-danger);
+}
+
+ion-label, .select-text {
+    margin-left: 10px;
+}

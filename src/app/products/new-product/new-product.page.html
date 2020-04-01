@@ -1,0 +1,152 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/products"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Create {{ isProduct ? 'Product' : 'Category' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-no-padding">
+  <form [formGroup]="form" novalidate>
+    <ion-grid>
+      <ion-row>
+          <ion-col size=4 offset=4 size-sm="6" offset-sm="3" class="ion-no-padding">
+            <div class="image-wrapper">
+              <ion-img src="assets/images/placeholder.jpg"></ion-img>
+            </div>
+            <ion-button (click)="onChangePhoto()">
+              <ion-icon slot="icon-only" name="images-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3" class="ion-no-padding">
+          <div class="mandatory-fields">
+            <ion-card >
+              <ion-list >
+                <ion-item  lines="inset">
+                  <ion-label position="floating">{{ isProduct ? 'Product' : 'Category'  }} Name</ion-label>
+                  <ion-input 
+                  *ngIf="!isProduct"
+                  type="text"
+                  style="background-color: transparent"
+                  formControlName="categoryname"
+                  >
+                  </ion-input>
+                  <ion-input
+                  *ngIf="isProduct" 
+                  type="text"
+                  style="background-color: transparent"
+                  formControlName="productname"
+                  >
+                  </ion-input>
+                <ion-item *ngIf="form.controls.categoryname.pending || form.controls.productname.pending" lines="none">
+                    <p>Checking {{ isProduct ? 'Product' : 'Category'  }} Name...</p>
+                </ion-item>
+                </ion-item>
+                <ion-item *ngIf="(isProduct && !form.get('productname').valid)  && !form.controls.productname.pending && (form.get('productname').touched || form.get('productname').dirty)" lines="none"> 
+                  <p> Please enter a valid {{ isProduct ? 'Product' : 'Category'  }} Name </p>
+                </ion-item>
+                <ion-item *ngIf="(!isProduct && !form.get('categoryname').valid)  && !form.controls.categoryname.pending && (form.get('categoryname').touched || form.get('categoryname').dirty)" lines="none"> 
+                  <p> Please enter a valid {{ isProduct ? 'Product' : 'Category'  }} Name </p>
+                </ion-item>
+                <ion-item *ngIf="isProduct"  lines="inset">
+                  <ion-label position="floating">Price</ion-label>
+                  <ion-input 
+                    type="number"
+                    style="background-color: transparent"
+                    formControlName="price"
+                    >
+                </ion-input>
+                </ion-item>
+                <ion-item *ngIf="!form.get('price').valid && form.get('price').touched"> 
+                  <p> Price must be valid and not below 0. </p>
+                </ion-item>
+              </ion-list>
+            </ion-card>
+          </div>
+        </ion-col>
+      </ion-row>
+      
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3" class="ion-no-padding">
+          <div *ngIf="isProduct" class="extra-fields">
+            <ion-card>
+              <ion-list >
+                <ion-item  lines="inset">
+                  <ion-label>Category</ion-label>
+                  <ion-select #CategorySelect interface="action-sheet"
+                                              formControlName="category"
+                                              placeholder="Select Category"
+                                              (ionChange)="onChangeSelectCategory(CategorySelect.value)">
+                    <ion-select-option *ngFor="let category of loadedCategories" value="{{ category.categoryName }}">{{ category.categoryName }}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <ion-item *ngIf="!form.get('category').valid && form.get('category').touched"> 
+                  <p> This is a required field. </p>
+                </ion-item>
+                <ion-item  lines="inset">
+                  <ion-label position="floating">Description</ion-label>
+                  <ion-textarea 
+                      rows="3" 
+                      placeholder="Description (Optional)"
+                      formControlName="description"
+                  ></ion-textarea>
+                </ion-item>
+                <ion-item *ngIf="!form.get('description').valid && form.get('description').touched"> 
+                  <p> Description must be between 1 and 180 characters. </p>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Code</ion-label>
+                  <ion-input 
+                    type="text"
+                    style="background-color: transparent"
+                    placeholder="(Optional) Used for Barcode"
+                    formControlName="code"
+                    >
+                </ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Cost</ion-label>
+                  <ion-input 
+                    type="number"
+                    style="background-color: transparent"
+                    placeholder="(Optional)"
+                    formControlName="cost"
+                    >
+                </ion-input>
+                </ion-item>
+                <ion-item *ngIf="!form.get('cost').valid && form.get('cost').touched"> 
+                  <p> Cost must be valid and not below 0. </p>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Sell Unit</ion-label>
+                  <ion-select #SellUnit value="unit"
+                                        interface="action-sheet"
+                                        formControlName="sellUnit"
+                                        (ionChange)="onChangeSelectSellUnit(SellUnit.value)">
+                    <ion-select-option value="unit"> Unit</ion-select-option>
+                    <ion-select-option value="fraction">Fraction (Kilo, Gram, etc.)</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-list>
+          </ion-card>
+          </div>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </form>
+</ion-content>
+<ion-footer>
+  <ion-button 
+        type="submit"
+        class="footer-btn" 
+        expand="block" 
+        color="primary" 
+        [disabled]="!form.valid" 
+        (click)="onSubmit()">
+    Create {{ isProduct ? 'Product' : 'Category'  }}
+  </ion-button>
+</ion-footer>

@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Products</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+
+    <!-- Segment button -->
+    <ion-row >
+      <ion-col size-sm="8" offset-sm="2" class="ion-no-padding">
+        <ion-segment value="product" (ionChange)="onSegmentChange($event)">
+          <ion-segment-button value="product">
+            <ion-label>Product</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="stock">
+            <ion-label>Stock</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="category">
+            <ion-label>Category</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+    </ion-row>
+
+    <!-- Search Bar -->
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" class="ion-no-padding">
+        <ion-searchbar placeholder="Search Products"></ion-searchbar>
+        <div *ngIf="isLoading" class="ion-text-center">
+          <ion-spinner color="primary"></ion-spinner>
+        </div>
+        <div class="ion-text-center" *ngIf="changeSegment=='category' && !isLoading && loadedCategories.length <= 0">
+          <p>No Categories found! Please create one first.</p>
+          <ion-button color="primary" (click)="onCreateProduct()"
+            >Create New Category</ion-button
+          >
+        </div>
+        <div class="ion-text-center" *ngIf="changeSegment=='product' && !isLoading && loadedProducts.length <= 0">
+          <p>No Products found! Please create one first.</p>
+          <ion-button color="primary" (click)="onCreateProduct()"
+            >Create New Product</ion-button
+          >
+        </div>
+        <ion-list *ngIf="changeSegment=='category' && (!isLoading && loadedCategories.length > 0)">
+          <ion-item-sliding *ngFor="let category of loadedCategories" #slidingItem>
+            <ion-item (click)="navigateToEdit(category.id)" detail> 
+            {{ category.categoryName }} </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option
+                color="primary"
+                (click)="onDeleteSubmit(category.id, slidingItem)"
+              >
+                <ion-icon name="trash" slot="icon-only"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+        <ion-list *ngIf="changeSegment=='product' && (!isLoading && loadedProducts.length > 0)">
+          <ion-item-sliding *ngFor="let product of loadedProducts" #slidingItem>
+            <ion-item (click)="navigateToEdit(product.id)" detail> 
+            {{ product.productName }} </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option
+                color="primary"
+                (click)="onDeleteSubmit(product.id, slidingItem)"
+              >
+                <ion-icon name="trash" slot="icon-only"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="danger" [disabled]="changeSegment == 'stock'" (click)="onCreateProduct()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

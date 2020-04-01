@@ -1,0 +1,36 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  // grid-auto-rows: 200px;
+  // column-gap: 10px;
+}
+
+
+ion-card-header, ion-card-content {
+  padding: 5px;
+}
+
+.subtitle-wrapper {
+  padding: 0;
+  margin:0;
+
+  ion-card-subtitle {
+    font-size: 8px;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  ion-icon {
+    font-size: 20px;
+  }
+
+}
+
+.card-timer {
+  font-size: 10px;
+}
+
+ion-card-title {
+  font-size: 12px;
+  text-transform: uppercase;
+}

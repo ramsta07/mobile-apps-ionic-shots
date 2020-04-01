@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="center-grid">
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-list class="ion-no-padding">
+              <ion-item class="ion-no-padding" lines="inset">
+                <ion-label position="floating">Username</ion-label>
+                <ion-input 
+                  type="text" 
+                  ngModel 
+                  name="username" 
+                  required 
+                  style="background-color: transparent"
+                  #userCtrl="ngModel">
+                </ion-input>
+              </ion-item>
+              <ion-item *ngIf="!userCtrl.valid && userCtrl.touched" class="ion-no-padding" lines="none">
+                <p class="input-invalid"> 
+                  ** Please enter a valid user name
+                </p>
+              </ion-item> 
+              <ion-item class="ion-no-padding" lines="full">
+                <ion-label position="floating">Password</ion-label>
+                <ion-input 
+                  [type]="getType()"
+                  ngModel
+                  name="password" 
+                  required
+                  minlength="6"
+                  #passCtrl="ngModel">
+                </ion-input>
+                <ion-icon class="ion-padding-top eye-icon" slot="end" name="eye" (click)="toggleTextPassword()"></ion-icon>
+              </ion-item>
+              <ion-item *ngIf="!passCtrl.valid && passCtrl.touched" class="ion-no-padding" lines="none">
+                <p class="input-invalid"> 
+                  ** Should be at least 6 characters
+                </p>
+              </ion-item>
+              <ion-button 
+                type="submit" 
+                expand="block" 
+                shape="round" 
+                color="primary"
+                [disabled]="!form.valid"
+                class="ion-margin">
+                Login
+              </ion-button>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+  </form>
+  </ion-grid>
+</ion-content>
