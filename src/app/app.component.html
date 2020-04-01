@@ -1,3 +1,38 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-split-pane when="md" contentId="main">
+
+    <!--  our side menu  -->
+    <ion-menu contentId="main">
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-title>Logo</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>  
+          <ion-menu-toggle autoHide="false">
+            <ion-item lines="none" routerLink='/navtabs/tabs/dashboard'>
+              <ion-icon slot="start" name="bar-chart-outline"></ion-icon>
+              <ion-label>Dashboard</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle autoHide="false" routerLink='/products'>
+            <ion-item lines="none">
+              <ion-icon slot="start" name="checkbox-outline"></ion-icon>
+              <ion-label>Products</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle autoHide="false">
+            <ion-item lines="none" button (click)="onLogOut()">
+              <ion-icon slot="start" name="exit"></ion-icon>
+              <ion-label>Logout</ion-label>
+            </ion-item>
+        </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+  
+    <!-- the main content -->
+    <ion-router-outlet id="main"></ion-router-outlet>
+  </ion-split-pane>
 </ion-app>
