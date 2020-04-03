@@ -6,6 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./order-details.page.scss'],
 })
 export class OrderDetailsPage implements OnInit {
+  
+  slideNavOpt = {
+    initialSlide: 0,
+    loop: false,
+    direction: 'vertical',
+    speed: 400,
+    slidesPerView: 3,
+    spacebetween: 3,
+  };
 
   constructor() { }
 

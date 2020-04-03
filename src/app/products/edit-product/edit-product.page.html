@@ -9,8 +9,9 @@
 
 <ion-content class="ion-no-padding">
   <ion-grid>
+
     <!-- Segment button -->
-    <ion-row >
+    <ion-row *ngIf="!isLoading && isProduct">
       <ion-col size-sm="8" offset-sm="2" class="ion-no-padding">
         <ion-segment value="product" (ionChange)="onSegmentChange($event)">
           <ion-segment-button value="product">
@@ -22,6 +23,7 @@
         </ion-segment>
       </ion-col>
     </ion-row>
+
     <div *ngIf="isLoading" class="loader-wrapper ion-text-center">
     <ion-spinner color="primary"></ion-spinner>
     </div>

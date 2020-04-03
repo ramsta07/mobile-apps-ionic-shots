@@ -1,0 +1,58 @@
+ion-grid {
+    height: 100%;
+
+    ion-col {
+        height: 40%
+    }
+
+    ion-slides {
+        height: 300px;
+    }
+}
+
+.slider-nav {
+    text-align: center;
+
+}
+
+.category-text {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.displayVertically {
+    display: block;
+    grid-template-columns: 50px 1fr 50px
+}
+
+.avatar-center {
+    text-align: center;
+    // padding: 10px,
+    width: 80px;
+}
+
+.card-products {
+    display: grid;
+    gap: .5rem;
+
+    grid-template-columns: repeat(2,1fr);
+    grid-auto-rows: 120;
+
+    max-height: 350px;
+    border: 1px solid black;
+}
+
+.card-products[scrollx=true].card-products[scrolly=true] {
+    position: relative;
+    overflow: hidden;
+}
+
+.card-products[scrollx=true] {
+    overflow-x: auto;
+}
+
+.card-products[scrolly=true] {
+    overflow-y: auto;
+}
+

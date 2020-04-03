@@ -8,5 +8,117 @@
 </ion-header>
 
 <ion-content>
+  <ion-grid>
+    <ion-row >
+      <ion-col size="3" size-sm="2">
+          
+        <div class="displayVertically" style="border:1px solid black"> 
 
+          <div class="slider-nav arrow-prev" style="border:1px solid blue"> 
+              <span class="slider-nav arrow-prev">
+                <div class="prev-icon-custom custon-nav">
+                  <ion-icon slot="icon-only" name="arrow-up-outline"></ion-icon>
+                </div>
+              </span>
+          </div> 
+
+          <div class="slide-nav" style="border: 1px solid red"> 
+            <ion-slides [options]="slideNavOpt" pager="false" #slideNavCategory>
+              <ion-slide>
+                <div class="category-wrapper">
+                  <ion-avatar>
+                    <img src="assets/images/placeholder.jpg">
+                  </ion-avatar>
+                  <p class="category-text"> Salad </p>
+                </div> 
+              </ion-slide>
+              <ion-slide>
+                <div class="category-wrapper">
+                  <ion-avatar>
+                    <img src="assets/images/placeholder.jpg">
+                  </ion-avatar>
+                  <p class="category-text"> Beer </p>
+                </div> 
+              </ion-slide>
+              <ion-slide>
+                <div class="category-wrapper">
+                  <ion-avatar>
+                    <img src="assets/images/placeholder.jpg">
+                  </ion-avatar>
+                  <p class="category-text"> Burger </p>
+                </div> 
+              </ion-slide>
+              <ion-slide>
+                <div class="category-wrapper">
+                  <ion-avatar>
+                    <img src="assets/images/placeholder.jpg">
+                  </ion-avatar>
+                  <p class="category-text"> Pasta </p>
+                </div> 
+              </ion-slide>
+          </ion-slides>
+          </div>
+          
+          <div class="slider-nav arrow-next" style="border:1px solid blue"> 
+            <span class="slider-nav arrow-next">
+              <div class="after-icon-custom custon-nav">
+                <ion-icon slot="icon-only" name="arrow-down-outline"></ion-icon>
+              </div>
+            </span>
+        </div> 
+
+        </div>
+
+      </ion-col>
+      <ion-col size="9" size-sm="6">
+          <!-- <ion-list lines=none class="ion-no-padding">   -->
+          <div class="card-products" scrolly="true">
+            <ion-card> 
+              <p>sample</p>
+            </ion-card>
+            <ion-card> 
+              <p>sample</p>
+            </ion-card>
+            <ion-card> 
+              <p>sample</p>
+            </ion-card>
+            <ion-card> 
+              <p>sample</p>
+            </ion-card>
+            <ion-card> 
+              <p>sample</p>
+            </ion-card>
+            <ion-card> 
+              <p>sample</p>
+            </ion-card>
+            <ion-card> 
+              <p>sample</p>
+            </ion-card>
+            <ion-card> 
+              <p>sample</p>
+            </ion-card>
+            <ion-card> 
+              <p>sample</p>
+            </ion-card>
+            <ion-card> 
+              <p>sample</p>
+            </ion-card>
+            <ion-card> 
+              <p>sample</p>
+            </ion-card>
+            <ion-card> 
+              <p>sample</p>
+            </ion-card>
+
+
+          </div>
+        <!-- </ion-list> -->
+      </ion-col>
+      <ion-col size="12" size-sm="4">
+        <div class="order-details" style="border: 1px solid black">
+            <h1> Orders here </h1>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
