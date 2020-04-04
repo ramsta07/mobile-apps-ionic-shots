@@ -34,20 +34,20 @@
         <div *ngIf="isLoading" class="ion-text-center">
           <ion-spinner color="primary"></ion-spinner>
         </div>
-        <div class="ion-text-center" *ngIf="changeSegment=='category' && !isLoading && loadedCategories.length <= 0">
+        <div class="ion-text-center" *ngIf="changeSegment=='category' && !isLoading && loadedCategoriesProduct.categories.length <= 0">
           <p>No Categories found! Please create one first.</p>
           <ion-button color="primary" (click)="onCreateProduct()"
             >Create New Category</ion-button
           >
         </div>
-        <div class="ion-text-center" *ngIf="changeSegment=='product' && !isLoading && loadedProducts.length <= 0">
+        <div class="ion-text-center" *ngIf="changeSegment=='product' && !isLoading && loadedCategoriesProduct.products.length <= 0">
           <p>No Products found! Please create one first.</p>
           <ion-button color="primary" (click)="onCreateProduct()"
             >Create New Product</ion-button
           >
         </div>
-        <ion-list *ngIf="changeSegment=='category' && (!isLoading && loadedCategories.length > 0)">
-          <ion-item-sliding *ngFor="let category of loadedCategories" #slidingItem>
+        <ion-list *ngIf="changeSegment=='category' && (!isLoading && loadedCategoriesProduct.categories.length > 0)">
+          <ion-item-sliding *ngFor="let category of loadedCategoriesProduct.categories" #slidingItem>
             <ion-item (click)="navigateToEdit(category.id)" detail> 
             {{ category.categoryName }} </ion-item>
             <ion-item-options side="end">
@@ -60,8 +60,8 @@
             </ion-item-options>
           </ion-item-sliding>
         </ion-list>
-        <ion-list *ngIf="changeSegment=='product' && (!isLoading && loadedProducts.length > 0)">
-          <ion-item-sliding *ngFor="let product of loadedProducts" #slidingItem>
+        <ion-list *ngIf="changeSegment=='product' && (!isLoading && loadedCategoriesProduct.products.length > 0)">
+          <ion-item-sliding *ngFor="let product of loadedCategoriesProduct.products" #slidingItem>
             <ion-item (click)="navigateToEdit(product.id)" detail> 
             {{ product.productName }} </ion-item>
             <ion-item-options side="end">

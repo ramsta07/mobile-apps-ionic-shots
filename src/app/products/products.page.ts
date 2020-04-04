@@ -2,8 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SegmentChangeEventDetail } from '@ionic/core';
 import { IonItemSliding } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
-import { LoadingController, ToastController, AlertController } from '@ionic/angular';
-import { Subscription, Observable } from 'rxjs';
+import { LoadingController, AlertController } from '@ionic/angular';
+import { Subscription, Observable, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { CategoryService } from '../@core/service/category.service';
 import { Category } from '../@core/model/category.model';
@@ -20,12 +21,10 @@ export class ProductsPage implements OnInit, OnDestroy {
 
   isLoading = false;
   changeSegment = 'product';
-  loadedCategories: Category[];
-  loadedProducts: Product[];
+  loadedCategoriesProduct: { categories: Category[], products: Product[] };
   isProduct = true;
 
-  private categorySub: Subscription;
-  private productSub: Subscription;
+  private loadedSub: Subscription;
 
   constructor(private categoryService: CategoryService, 
               private productService: ProductService,
@@ -35,16 +34,21 @@ export class ProductsPage implements OnInit, OnDestroy {
               private commUtil: CommonUtils) { }
 
   ngOnInit() {
-    
+
     this.isLoading = true;
-    this.categorySub = this.categoryService.getCategories().subscribe(data => {
-      this.loadedCategories = data;
+    this.loadedSub = combineLatest (
+          this.categoryService.getCategories(),
+          this.productService.getProducts()
+        ).pipe(
+          map(([categories, products]) => {
+            return {categories, products};
+          })
+    ).subscribe(data => {
+      this.loadedCategoriesProduct = data;
+      this.isLoading = false;
     });
 
-    this.productSub = this.productService.getProducts().subscribe(data => {
-      this.loadedProducts = data;
-      this.isLoading = false;
-    })
+    console.log('Here at products')
 
   }
 
@@ -141,15 +145,18 @@ export class ProductsPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.categorySub) {this.categorySub.unsubscribe();};
-    if (this.productSub) {this.productSub.unsubscribe();};
+    if (this.loadedSub) {this.loadedSub.unsubscribe();}
+  }
+
+  IonViewDidLeave() {
+    if (this.loadedSub) {this.loadedSub.unsubscribe();}
   }
 
   goToProductCreate(product: boolean) {
     const navigationExtras: NavigationExtras = {
       state: {
         isProduct: product,
-        categories: this.loadedCategories
+        categories: this.loadedCategoriesProduct.categories
       }
     };
     this.route.navigate(['/products/new-product'], navigationExtras);
@@ -161,7 +168,7 @@ export class ProductsPage implements OnInit, OnDestroy {
       state: {
         productId: id,
         isProduct: this.isProduct,
-        categories: this.loadedCategories
+        categories: this.loadedCategoriesProduct.categories
       }
     };
 

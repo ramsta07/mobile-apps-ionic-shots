@@ -9,60 +9,41 @@
 
 <ion-content>
   <ion-grid>
-    <ion-row >
+    <ion-row>
       <ion-col size="3" size-sm="2">
           
-        <div class="displayVertically" style="border:1px solid black"> 
+        <div class="displayVertically"> 
 
-          <div class="slider-nav arrow-prev" style="border:1px solid blue"> 
-              <span class="slider-nav arrow-prev">
-                <div class="prev-icon-custom custon-nav">
-                  <ion-icon slot="icon-only" name="arrow-up-outline"></ion-icon>
-                </div>
+          <div class="slider-nav arrow-prev"> 
+              <span class="slider-nav arrow-prev" (click)="slidePrev(slider,slideNavCategory)">
+                <div class="prev-icon-custom custom-nav" [class.disabled]="slider.isBeginningSlide">
+                  <!-- <ion-button> -->
+                    <ion-img src="assets/images/iconmonstr-arrow-66.svg"></ion-img>
+                  <!-- </ion-button> -->
+                </div> 
               </span>
           </div> 
 
-          <div class="slide-nav" style="border: 1px solid red"> 
-            <ion-slides [options]="slideNavOpt" pager="false" #slideNavCategory>
-              <ion-slide>
-                <div class="category-wrapper">
+          <div class="slide-nav"> 
+            <ion-slides [options]="slideNavOpt" pager="false" #slideNavCategory
+                        (ionSlideDidChange)="slideDidChange($event, slider, slideNavCategory)">
+
+              <!-- Add Category to the Nav Slide -->
+              <ion-slide *ngFor="let category of (loadedCategoriesProduct | async)?.categories">
+                <div class="category-wrapper" (click)="onFilterProducts(category.categoryName)">
                   <ion-avatar>
                     <img src="assets/images/placeholder.jpg">
                   </ion-avatar>
-                  <p class="category-text"> Salad </p>
-                </div> 
-              </ion-slide>
-              <ion-slide>
-                <div class="category-wrapper">
-                  <ion-avatar>
-                    <img src="assets/images/placeholder.jpg">
-                  </ion-avatar>
-                  <p class="category-text"> Beer </p>
-                </div> 
-              </ion-slide>
-              <ion-slide>
-                <div class="category-wrapper">
-                  <ion-avatar>
-                    <img src="assets/images/placeholder.jpg">
-                  </ion-avatar>
-                  <p class="category-text"> Burger </p>
-                </div> 
-              </ion-slide>
-              <ion-slide>
-                <div class="category-wrapper">
-                  <ion-avatar>
-                    <img src="assets/images/placeholder.jpg">
-                  </ion-avatar>
-                  <p class="category-text"> Pasta </p>
+                  <p class="category-text"> {{ category.categoryName }} </p>
                 </div> 
               </ion-slide>
           </ion-slides>
           </div>
           
-          <div class="slider-nav arrow-next" style="border:1px solid blue"> 
-            <span class="slider-nav arrow-next">
-              <div class="after-icon-custom custon-nav">
-                <ion-icon slot="icon-only" name="arrow-down-outline"></ion-icon>
+          <div class="slider-nav arrow-next"> 
+            <span class="slider-nav arrow-next" (click)=slideNext(slider,slideNavCategory)>
+              <div class="after-icon-custom custom-nav" [class.disabled]="slider.isEndSlide">
+                <ion-img src="assets/images/iconmonstr-arrow-65.svg"></ion-img>
               </div>
             </span>
         </div> 
@@ -71,7 +52,6 @@
 
       </ion-col>
       <ion-col size="9" size-sm="6">
-          <!-- <ion-list lines=none class="ion-no-padding">   -->
           <div class="card-products" scrolly="true">
             <ion-card> 
               <p>sample</p>
@@ -109,8 +89,6 @@
             <ion-card> 
               <p>sample</p>
             </ion-card>
-
-
           </div>
         <!-- </ion-list> -->
       </ion-col>
