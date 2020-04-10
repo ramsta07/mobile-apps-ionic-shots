@@ -41,22 +41,30 @@ export class ProductService {
         );
       }
     
+      getProductsByCategory(category: string) {
+        return this.products.pipe(map(product => {
+            return product.filter((p) => {
+                return p.productCategory.toLowerCase() === category.toLowerCase()
+            })
+        }))
+      }
+
     addProduct(product: Product): Promise<DocumentReference> {
-    return this.productColref.add(product);
+        return this.productColref.add(product);
     }
 
     updateProduct(product: Product): Promise<void> {
-    return this.productColref.doc(product.id).update(
-        {   productName: product.productName,
-            productImageURL: product.productImageURL,
-            productPrice: product.productPrice,
-            productCategory: product.productCategory,
-            productDescription: product.productDescription,
-            productBarCode: product.productBarCode,
-            productCostPrice: product.productCostPrice,
-            productSellUnit: product.productSellUnit,
-            modifiedBy: product.modifiedBy,
-            modifiedAt: product.modifiedAt });
+        return this.productColref.doc(product.id).update(
+            {   productName: product.productName,
+                productImageURL: product.productImageURL,
+                productPrice: product.productPrice,
+                productCategory: product.productCategory,
+                productDescription: product.productDescription,
+                productBarCode: product.productBarCode,
+                productCostPrice: product.productCostPrice,
+                productSellUnit: product.productSellUnit,
+                modifiedBy: product.modifiedBy,
+                modifiedAt: product.modifiedAt });
     }
 
     deleteProduct(id: string): Promise<void> {

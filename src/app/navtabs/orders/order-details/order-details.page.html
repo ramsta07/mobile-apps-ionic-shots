@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-no-margin ion-no-padding">
   <ion-grid>
     <ion-row>
       <ion-col size="3" size-sm="2">
@@ -29,7 +29,7 @@
                         (ionSlideDidChange)="slideDidChange($event, slider, slideNavCategory)">
 
               <!-- Add Category to the Nav Slide -->
-              <ion-slide *ngFor="let category of (loadedCategoriesProduct | async)?.categories">
+              <ion-slide *ngFor="let category of (loadedTableOrders | async)?.categories">
                 <div class="category-wrapper" (click)="onFilterProducts(category.categoryName)">
                   <ion-avatar>
                     <img src="assets/images/placeholder.jpg">
@@ -46,57 +46,67 @@
                 <ion-img src="assets/images/iconmonstr-arrow-65.svg"></ion-img>
               </div>
             </span>
-        </div> 
+          </div> 
 
         </div>
 
       </ion-col>
       <ion-col size="9" size-sm="6">
           <div class="card-products" scrolly="true">
-            <ion-card> 
-              <p>sample</p>
+
+            <ion-card *ngFor="let product of filteredProducts | async" (click)="onNavigateProductOrder(tableid, product.id)"> 
+              <img class="product-image" src="assets/images/placeholder.jpg" />
+              <div class="card-header">
+                <ion-card-subtitle> {{  product.productPrice | currency:"PHP":"symbol" }} </ion-card-subtitle>
+                <ion-card-title> {{ product.productName }}</ion-card-title>
+              </div>
             </ion-card>
-            <ion-card> 
-              <p>sample</p>
-            </ion-card>
-            <ion-card> 
-              <p>sample</p>
-            </ion-card>
-            <ion-card> 
-              <p>sample</p>
-            </ion-card>
-            <ion-card> 
-              <p>sample</p>
-            </ion-card>
-            <ion-card> 
-              <p>sample</p>
-            </ion-card>
-            <ion-card> 
-              <p>sample</p>
-            </ion-card>
-            <ion-card> 
-              <p>sample</p>
-            </ion-card>
-            <ion-card> 
-              <p>sample</p>
-            </ion-card>
-            <ion-card> 
-              <p>sample</p>
-            </ion-card>
-            <ion-card> 
-              <p>sample</p>
-            </ion-card>
-            <ion-card> 
-              <p>sample</p>
-            </ion-card>
+            
           </div>
+          
         <!-- </ion-list> -->
       </ion-col>
-      <ion-col size="12" size-sm="4">
-        <div class="order-details" style="border: 1px solid black">
-            <h1> Orders here </h1>
+      <ion-col size="12" size-sm="4" class="ion-no-padding ion-no-margin">
+        <div class="order-details">
+            <h3 class="order-details-label">Order Details:</h3>
+            <ion-list *ngFor="let orders of (loadedTableOrders | async)?.tableorder">
+              <ion-item *ngFor="let order of orders.orders; let indexOfElement=index">
+                <ion-thumbnail>
+                  <img src="assets/images/placeholder.jpg" />
+                </ion-thumbnail>
+                <div class="item-wrapper">
+                  <ion-label> {{ order.productname }}</ion-label>
+                  <div class="item-price">
+                    <div class="item-quantity">
+                      <ion-button fill="clear" class="ion-no-padding" (click)="onRemoveOrder(order)">
+                        <ion-icon slot="icon-only" name="remove-circle-outline"></ion-icon>
+                      </ion-button>
+                      <ion-label class="quantity-label"> {{ order.quantity }} </ion-label>
+                      <ion-button fill="clear" class="ion-no-padding" (click)="onAddOrder(order)">
+                        <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+                      </ion-button>
+                    </div>
+                    <ion-label> {{ order.price }}</ion-label>
+                  </div>
+               </div>
+              </ion-item>
+            </ion-list>
+        </div>
+        <div class="bottom-wrapper">  
+          <div class="grand-total">
+            <ion-label class="total-label">Grand Total</ion-label>
+            <ion-label class="total-amount">100.00</ion-label>
+          </div>
+          <ion-button expand="block" color="primary" (click)="onPlaceOrder()">
+            Place Order
+          </ion-button>
         </div>
       </ion-col>
     </ion-row>
+    <!-- <ion-row>
+      <ion-col size="12" size-sm="4" class="ion-no-margin ion-no-padding">
+        
+      </ion-col>
+    </ion-row> -->
   </ion-grid>
 </ion-content>

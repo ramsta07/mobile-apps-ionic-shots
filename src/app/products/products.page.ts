@@ -48,8 +48,6 @@ export class ProductsPage implements OnInit, OnDestroy {
       this.isLoading = false;
     });
 
-    console.log('Here at products')
-
   }
 
   onSegmentChange(event: CustomEvent<SegmentChangeEventDetail>) {

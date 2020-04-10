@@ -2,10 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Category } from 'src/app/@core/model/category.model';
 import { CategoryService } from 'src/app/@core/service/category.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavController, ToastController, LoadingController } from '@ionic/angular';
+import { NavController, LoadingController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SegmentChangeEventDetail } from '@ionic/core';
-import { CategoryValidator } from '../../../app/@core/validators/category-name';
 import { Subscription } from 'rxjs';
 
 import { CommonUtils } from '../../@core/utils/common-utils';
